@@ -1,0 +1,27 @@
+{
+    "name": "green-university-event-backend",
+    "version": "1.0.0",
+    "description": "Smart Event Management System - Backend API",
+    "main": "src/server.js",
+    "scripts": {
+        "start": "node src/server.js",
+        "dev": "nodemon src/server.js",
+        "test": "node test-db.js"
+    },
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "compression": "^1.7.4",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "express-validator": "^6.14.3",
+        "helmet": "^7.0.0",
+        "jsonwebtoken": "^9.0.0",
+        "mongoose": "^7.0.0",
+        "morgan": "^1.10.0",
+        "qrcode": "^1.5.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.20"
+    }
+}
