@@ -1,0 +1,23 @@
+{
+    "clientName": "Thunder Client",
+    "collectionName": "pp",
+    "collectionId": "0e71e273-3364-4b9a-8646-a92ff439e43d",
+    "dateExported": "2026-08-14T04:27:45.889Z",
+    "version": "1.4",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "8ecf648c-dbf4-4693-895b-449d61679f3c",
+            "colId": "0e71e273-3364-4b9a-8646-a92ff439e43d",
+            "containerId": "",
+            "name": "http://localhost:5000/api/events",
+            "url": "http://localhost:5000/api/health",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2026-08-14T04:13:27.719Z",
+            "modified": "2026-08-14T04:13:27.719Z",
+            "headers": []
+        }
+    ],
+    "ref": "77b95MMdBGaRgpjMThMVhs-zKq-VQQXsj2uCzuhFrB5_c4BBL1-fs_OcueJi87o2CxZl4Qh1go45FLt72q1emg"
+}
