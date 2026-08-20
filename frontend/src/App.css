@@ -1,38 +1,78 @@
-.App {
-  text-align: center;
+:root {
+  --gu-green: #1e6b3f;
+  --gu-green-dark: #14502e;
+  --gu-green-light: #e8f5ec;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background-color: #f6f9f7;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Navbar */
+.app-navbar {
+  background: linear-gradient(90deg, var(--gu-green-dark), var(--gu-green));
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.app-navbar .nav-link {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 500;
 }
 
-.App-link {
-  color: #61dafb;
+.app-navbar .nav-link:hover {
+  color: #ffffff !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.notif-badge {
+  font-size: 0.6rem;
+}
+
+/* Auth pages */
+.auth-container {
+  min-height: 82vh;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 450px;
+}
+
+.auth-card-wide {
+  max-width: 550px;
+}
+
+/* Event cards */
+.event-card {
+  transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  overflow: hidden;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(30, 107, 63, 0.15) !important;
+}
+
+.event-card-image {
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--gu-green-light);
+}
+
+.event-detail-image {
+  height: 280px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--gu-green-light);
+  border-top-left-radius: calc(0.375rem - 1px);
+  border-top-right-radius: calc(0.375rem - 1px);
+}
+
+/* Utility */
+.text-success a {
+  color: inherit;
+}
+
+.table-success th {
+  color: var(--gu-green-dark);
 }
