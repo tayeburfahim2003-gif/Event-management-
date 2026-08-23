@@ -55,7 +55,7 @@ const register = async(req, res) => {
 // ============================================
 const login = async(req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, rememberMe } = req.body;
 
         const user = await User.findOne({ email }).select('+password');
         if (!user) {
@@ -72,6 +72,19 @@ const login = async(req, res) => {
 
         const token = generateToken(user._id);
 
+        // "Remember me" cookie: httpOnly so client-side JS can't read/tamper
+        // with it. With rememberMe, it persists 30 days; otherwise it's a
+        // session cookie that disappears when the browser closes.
+        const cookieOptions = {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax'
+        };
+        if (rememberMe) {
+            cookieOptions.maxAge = 30 * 24 * 60 * 60 * 1000; // 30 days
+        }
+        res.cookie('token', token, cookieOptions);
+
         res.status(200).json({
             success: true,
             token,
@@ -87,6 +100,14 @@ const login = async(req, res) => {
     } catch (error) {
         res.status(400).json({ success: false, error: error.message });
     }
+};
+
+// ============================================
+// LOGOUT USER
+// ============================================
+const logout = (req, res) => {
+    res.clearCookie('token');
+    res.status(200).json({ success: true, message: 'Logged out successfully' });
 };
 
 // ============================================
@@ -127,6 +148,7 @@ const updateProfile = async(req, res) => {
 module.exports = {
     register,
     login,
+    logout,
     getMe,
     updateProfile
 };

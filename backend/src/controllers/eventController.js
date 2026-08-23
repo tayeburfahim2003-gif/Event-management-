@@ -1,5 +1,6 @@
 const Event = require('../models/Event');
 const User = require('../models/User');
+const Registration = require('../models/Registration');
 const { createNotification } = require('./notificationController');
 
 // ============================================
@@ -235,6 +236,42 @@ const getMyEvents = async(req, res) => {
 };
 
 // ============================================
+// GET EVENT FEEDBACK / RATINGS
+// ============================================
+const getEventFeedback = async(req, res) => {
+    try {
+        const reviews = await Registration.find({
+            eventId: req.params.id,
+            feedbackSubmitted: true
+        })
+            .populate('userId', 'name profilePicture')
+            .sort({ registrationDate: -1 });
+
+        const ratings = reviews.map((r) => r.feedbackRating);
+        const averageRating = ratings.length
+            ? Number((ratings.reduce((sum, r) => sum + r, 0) / ratings.length).toFixed(1))
+            : 0;
+
+        res.status(200).json({
+            success: true,
+            data: {
+                averageRating,
+                totalReviews: reviews.length,
+                reviews: reviews.map((r) => ({
+                    _id: r._id,
+                    user: r.userId,
+                    rating: r.feedbackRating,
+                    comment: r.feedbackComment,
+                    date: r.registrationDate
+                }))
+            }
+        });
+    } catch (error) {
+        res.status(400).json({ success: false, error: error.message });
+    }
+};
+
+// ============================================
 // EXPORT ALL FUNCTIONS
 // ============================================
 module.exports = {
@@ -243,5 +280,6 @@ module.exports = {
     createEvent,
     updateEvent,
     deleteEvent,
-    getMyEvents
+    getMyEvents,
+    getEventFeedback
 };
