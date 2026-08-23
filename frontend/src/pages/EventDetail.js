@@ -7,6 +7,7 @@ import {
 } from 'react-icons/fa';
 import API, { getErrorMessage } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import FeedbackSection from '../components/FeedbackSection';
 
 function EventDetail() {
   const [event, setEvent] = useState(null);
@@ -232,6 +233,12 @@ function EventDetail() {
               Please <Link to="/login">login</Link> to register for this event.
             </Alert>
           )}
+
+          <FeedbackSection
+            eventId={event._id}
+            registration={registration}
+            onFeedbackSubmitted={checkRegistration}
+          />
         </Card.Body>
       </Card>
     </Container>

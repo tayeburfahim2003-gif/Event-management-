@@ -7,6 +7,7 @@ import { useAuth } from '../context/AuthContext';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   const { login } = useAuth();
@@ -17,7 +18,7 @@ function Login() {
     e.preventDefault();
     setError('');
     setBusy(true);
-    const result = await login(email, password);
+    const result = await login(email, password, rememberMe);
     setBusy(false);
     if (result.success) {
       const redirectTo = location.state?.from?.pathname || '/';
@@ -64,6 +65,15 @@ function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+              />
+            </Form.Group>
+            <Form.Group className="mb-4">
+              <Form.Check
+                type="checkbox"
+                id="rememberMe"
+                label="Remember me for 30 days"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
               />
             </Form.Group>
             <div className="d-grid">

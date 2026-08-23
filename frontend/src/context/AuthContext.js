@@ -30,9 +30,9 @@ export function AuthProvider({ children }) {
     loadUser();
   }, [loadUser]);
 
-  const login = async (email, password) => {
+  const login = async (email, password, rememberMe = false) => {
     try {
-      const res = await API.post('/auth/login', { email, password });
+      const res = await API.post('/auth/login', { email, password, rememberMe });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.data));
       setUser(res.data.data);
@@ -55,6 +55,7 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
+    API.post('/auth/logout').catch(() => {}); // clears the httpOnly cookie server-side
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);
