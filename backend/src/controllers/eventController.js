@@ -8,9 +8,10 @@ const { createNotification } = require('./notificationController');
 // ============================================
 const getEvents = async(req, res) => {
     try {
-        const { category, status, search, limit = 20, page = 1 } = req.query;
-
+          const { category, status, search, page = 1 } = req.query;
+        const limit = Math.min(parseInt(req.query.limit) || 20, 100); // cap to prevent abuse
         const filter = {};
+        
         if (category) filter.category = category;
         if (status) filter.status = status;
         if (search) {

@@ -1,4 +1,5 @@
 const Registration = require('../models/Registration');
+const { generateCertificate } = require('../utils/certificateGenerator');
 const Event = require('../models/Event');
 const QRCode = require('qrcode');
 
@@ -186,7 +187,43 @@ const submitFeedback = async(req, res) => {
         res.status(400).json({ success: false, error: error.message });
     }
 };
+// ============================================
+// ISSUE CERTIFICATE FOR A COMPLETED REGISTRATION
+// ============================================
+const issueCertificate = async(req, res) => {
+    try {
+        const registration = await Registration.findById(req.params.id)
+            .populate('userId', 'name email')
+            .populate('eventId');
 
+        if (!registration) {
+            return res.status(404).json({ success: false, error: 'Registration not found' });
+        }
+
+        if (registration.userId._id.toString() !== req.user.id && req.user.role !== 'admin') {
+            return res.status(403).json({ success: false, error: 'Not authorized' });
+        }
+
+        if (registration.attendanceStatus !== 'checked-in') {
+            return res.status(400).json({ success: false, error: 'Certificate is only available after check-in' });
+        }
+
+        const event = registration.eventId;
+        if (new Date(event.endDate) > new Date()) {
+            return res.status(400).json({ success: false, error: 'Certificate is only available after the event has ended' });
+        }
+
+        const certificateUrl = await generateCertificate(registration.userId, event);
+
+        registration.certificateIssued = true;
+        registration.certificateUrl = certificateUrl;
+        await registration.save();
+
+        res.status(200).json({ success: true, message: 'Certificate generated', data: { certificateUrl } });
+    } catch (error) {
+        res.status(400).json({ success: false, error: error.message });
+    }
+};
 // ============================================
 // EXPORT ALL FUNCTIONS
 // ============================================
@@ -196,5 +233,6 @@ module.exports = {
     getUserRegistrations,
     getEventRegistrations,
     cancelRegistration,
-    submitFeedback
+    submitFeedback,
+    issueCertificate
 };

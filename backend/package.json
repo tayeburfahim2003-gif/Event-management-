@@ -20,8 +20,8 @@
         "jsonwebtoken": "^9.0.0",
         "mongoose": "^7.0.0",
         "morgan": "^1.10.0",
-        "qrcode": "^1.5.1",
-        "pdfkit": "^0.14.0"
+        "pdfkit": "^0.14.0",
+        "qrcode": "^1.5.1"
     },
     "devDependencies": {
         "nodemon": "^2.0.20"

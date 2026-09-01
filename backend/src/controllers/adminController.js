@@ -12,10 +12,12 @@ const getDashboardStats = async(req, res) => {
         const totalEvents = await Event.countDocuments();
         const totalRegistrations = await Registration.countDocuments();
         const pendingEvents = await Event.countDocuments({ status: 'pending' });
+        const approvedEvents = await Event.countDocuments({ status: 'approved' });
+        const rejectedEvents = await Event.countDocuments({ status: 'rejected' });
 
         res.status(200).json({
             success: true,
-            data: { totalUsers, totalEvents, totalRegistrations, pendingEvents }
+            data: { totalUsers, totalEvents, totalRegistrations, pendingEvents, approvedEvents, rejectedEvents }
         });
     } catch (error) {
         res.status(400).json({ success: false, error: error.message });

@@ -114,4 +114,7 @@ EventSchema.methods.isOngoing = function() {
     return now >= this.startDate && now <= this.endDate;
 };
 
+// Text index to support efficient keyword search across title/description/venue
+EventSchema.index({ title: 'text', description: 'text', venue: 'text' });
+
 module.exports = mongoose.model('Event', EventSchema);
