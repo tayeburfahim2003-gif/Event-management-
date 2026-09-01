@@ -113,6 +113,7 @@ const logout = (req, res) => {
 // ============================================
 // GET CURRENT USER
 // ============================================
+//save user
 const getMe = async(req, res) => {
     try {
         const user = await User.findById(req.user.id);
