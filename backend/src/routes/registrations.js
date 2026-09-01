@@ -6,6 +6,7 @@ const {
     getUserRegistrations,
     getEventRegistrations,
     cancelRegistration,
+    issueCertificate,
     submitFeedback
 } = require('../controllers/registrationController');
 const { protect, authorize } = require('../middleware/auth');
@@ -19,5 +20,5 @@ router.get('/user', getUserRegistrations);
 router.get('/event/:eventId', getEventRegistrations);
 router.put('/:id/feedback', submitFeedback);
 router.delete('/:id', cancelRegistration);
-
+router.get('/:id/certificate', issueCertificate);
 module.exports = router;
