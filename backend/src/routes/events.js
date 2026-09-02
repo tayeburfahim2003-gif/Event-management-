@@ -9,11 +9,11 @@ const {
     getMyEvents,
     getEventFeedback
 } = require('../controllers/eventController');
-const { protect, authorize } = require('../middleware/auth');
+const { protect, authorize, optionalAuth } = require('../middleware/auth');
 const { validateEvent, validate } = require('../middleware/validation');
 
 // Public routes
-router.get('/', getEvents);
+router.get('/', optionalAuth, getEvents);
 
 // Protected routes (must come before the generic '/:id' route below,
 // otherwise Express matches "my-events" as an :id and errors out)
